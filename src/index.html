@@ -356,7 +356,7 @@
             type="number"
             id="dropsInput"
             min="0"
-            step="0.1"
+            step="1"
             placeholder="Ex.: 20"
           />
         </section>
@@ -539,6 +539,14 @@
 
     dropsInput.addEventListener("input", () => {
       if (isSyncing) return;
+      const raw = (dropsInput.value || "").trim();
+      const parsed = parseFloat(raw.replace(",", "."));
+      if (raw !== "" && !isNaN(parsed)) {
+        const inteiro = Math.max(0, Math.floor(parsed));
+        if (String(inteiro) !== dropsInput.value) {
+          dropsInput.value = inteiro;
+        }
+      }
       isSyncing = true;
       const gotas = parseFloat((dropsInput.value || "0").replace(",", "."));
       if (!isNaN(gotas)) {
@@ -555,7 +563,7 @@
       isSyncing = true;
       const ml = parseFloat((mlInput.value || "0").replace(",", "."));
       if (!isNaN(ml)) {
-        dropsInput.value = ml * DROPS_PER_ML || "";
+        dropsInput.value = Math.round(ml * DROPS_PER_ML) || "";
       } else {
         dropsInput.value = "";
       }
