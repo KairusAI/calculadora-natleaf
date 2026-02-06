@@ -286,6 +286,23 @@
       color: #6b7280;
     }
 
+    .app-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      text-decoration: none;
+      color: #ffffff;
+      background: #b1b1b1;
+      padding: 10px 20px;
+      border-radius: 5px;
+      display: inline-block;
+    }
+
+    .app-button:hover {
+      background: #696767;
+    }
+
     @media (max-width: 720px) {
       body {
         height: auto;
@@ -328,13 +345,14 @@
   </style>
 </head>
 <body>
+  <a href="https://app-natleaf-site.iw8fse.easypanel.host" target="_blank" rel="noopener noreferrer" class="app-button">App Natleaf</a>
+
   <main class="card">
     <div class="card-left">
       <div class="product-image-wrapper">
         <img id="productImage" src="assets/images/Natleaf-brain.png" alt="Produto Natleaf" />
       </div>
     </div>
-
     <div class="card-center">
       <div class="title-block">
         <h1>Calculadora de Doses Natleaf</h1>
