@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Calculadora de Doses - Natleaf</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Calculadora de dosagem de canabinoides para produtos Natleaf">
+  <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="assets/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/favicon/site.webmanifest" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a href="index.html" class="app-button">
+    <i class="ph ph-arrow-left"></i> Voltar
+  </a>
+
+  <div class="main-container">
+    <main class="card">
+      <div class="card-column col-visual">
+        <div class="product-display">
+          <div class="image-container">
+            <img id="productImage" src="assets/images/Natleaf-brain.png" alt="Embalagem do produto Natleaf" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card-column col-controls">
+        <header class="header-block">
+          <h1>Calculadora de Doses</h1>
+          <p>Selecione o produto e ajuste a posologia.</p>
+        </header>
+
+        <form class="calculator-form" onsubmit="return false;">
+          <div class="form-group">
+            <label for="productSelect" class="label-heading">Produto Prescrito</label>
+            <div class="select-wrapper">
+              <select id="productSelect" class="input-field">
+                <option value="natleaf_brain">Natleaf Brain</option>
+                <option value="natleaf_sleep">Natleaf Sleep</option>
+                <option value="natleaf_wellness">Natleaf Wellness</option>
+              </select>
+              <i class="ph ph-caret-down select-icon"></i>
+            </div>
+          </div>
+
+          <div class="inputs-row">
+            <div class="form-group">
+              <label for="dropsInput" class="label-heading">Gotas</label>
+              <div class="input-wrapper">
+                <input type="number" id="dropsInput" min="0" step="1" placeholder="0" class="input-field" />
+                <span class="input-suffix">gts</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="mlInput" class="label-heading">Volume</label>
+              <div class="input-wrapper">
+                <input type="number" id="mlInput" min="0" step="0.01" placeholder="0,00" class="input-field" />
+                <span class="input-suffix">mL</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="conversion-info">
+            <i class="ph ph-info"></i>
+            <span>Referência: 40 gotas ≈ 1 mL</span>
+          </div>
+        </form>
+
+        <div class="downloads-section">
+          <span class="section-label">Documentação Técnica (PDF)</span>
+          <div class="button-group">
+            <a class="btn-outline" href="assets/docs/COA Natleaf Brain (1).pdf" target="_blank" download><i class="ph ph-file-pdf"></i> Brain</a>
+            <a class="btn-outline" href="assets/docs/COA Natleaf Sleep (1).pdf" target="_blank" download><i class="ph ph-file-pdf"></i> Sleep</a>
+            <a class="btn-outline" href="assets/docs/COA Natleaf Wellness (1).pdf" target="_blank" download><i class="ph ph-file-pdf"></i> Wellness</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-column col-results">
+        <div class="results-panel">
+          <div class="results-header">
+            <img src="assets/favicon/favicon.svg" alt="" />
+            <h2>Composição da Dose</h2>
+          </div>
+          <div class="main-dose-display">
+            <span class="dose-label">Dose Total</span>
+            <strong id="doseTitle" class="dose-value">0 gotas</strong>
+            <span id="doseSubtitle" class="dose-sub">0 mL</span>
+          </div>
+          <div class="composition-list" id="resultsGrid"></div>
+          <div class="disclaimer">
+            <p>Valores calculados com base nos laudos de análise (COA) do lote atual.</p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; Natleaf - Todos os direitos reservados.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

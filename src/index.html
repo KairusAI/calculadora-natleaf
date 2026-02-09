@@ -2,597 +2,73 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Calculadora de Doses Natleaf</title>
+  <title>Natleaf</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Natleaf - App, Calculadora de Doses e E-Book">
   <link rel="icon" type="image/png" href="assets/favicon/favicon-96x96.png" sizes="96x96" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg" />
   <link rel="shortcut icon" href="assets/favicon/favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png" />
   <link rel="manifest" href="assets/favicon/site.webmanifest" />
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-
-    body {
-      min-height: 100vh;
-      height: 100vh;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
-      background: rgb(125, 186, 0);
-      padding: 16px;
-      color: #111827;
-    }
-
-    .card {
-      width: 100%;
-      max-width: 1040px;
-      display: grid;
-      grid-template-columns: minmax(220px, 1.3fr) minmax(200px, 1.2fr) minmax(200px, 1.2fr);
-      gap: 0;
-      background: #ffffff;
-      border-radius: 20px;
-      box-shadow:
-        0 18px 45px rgba(15, 23, 42, 0.18),
-        0 1px 3px rgba(15, 23, 42, 0.08);
-      overflow: hidden;
-    }
-
-    .card-left {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 16px;
-      background: #fafafa;
-    }
-
-    .product-image-wrapper {
-      flex-shrink: 0;
-      /* PNGs com muita área vazia: usamos "zoom" via transform no <img> */
-      --product-image-zoom: 8;
-      max-width: 320px;
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: clamp(260px, 62vh, 520px);
-      overflow: hidden;
-    }
-
-    .product-image-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      transform: scale(var(--product-image-zoom));
-      transform-origin: center;
-    }
-
-    .card-center {
-      display: flex;
-      flex-direction: column;
-      padding: 20px 20px 16px;
-      overflow-y: auto;
-    }
-
-    .title-block {
-      margin-bottom: 16px;
-    }
-
-    .title-block h1 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 2px;
-      text-align: center;
-    }
-
-    .title-block p {
-      font-size: 0.8rem;
-      color: #6b7280;
-      text-align: center;
-    }
-
-    .field-group {
-      margin-bottom: 12px;
-    }
-
-    .fields-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .fields-row .field-group {
-      margin-bottom: 0;
-    }
-
-    label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #4b5563;
-      margin-bottom: 6px;
-    }
-
-    select,
-    input[type="number"] {
-      width: 100%;
-      border-radius: 999px;
-      border: 1px solid #d1d5db;
-      padding: 10px 14px;
-      font-size: 0.9rem;
-      outline: none;
-      background: #f9fafb;
-      appearance: none;
-      position: relative;
-    }
-
-    select:focus,
-    input[type="number"]:focus {
-      border-color: #0ea5e9;
-      box-shadow: 0 0 0 1px rgba(14, 165, 233, 0.2);
-      background: #ffffff;
-    }
-
-    .select-wrapper {
-      position: relative;
-    }
-
-    .select-wrapper::after {
-      content: "▾";
-      position: absolute;
-      right: 12px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.75rem;
-      color: #6b7280;
-      pointer-events: none;
-    }
-
-    .chip {
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid #e5e7eb;
-      font-size: 0.75rem;
-      color: #4b5563;
-      background: #f9fafb;
-      white-space: nowrap;
-    }
-
-    .card-right {
-      display: flex;
-      flex-direction: column;
-      min-height: 0;
-    }
-
-    .results-card {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      padding: 14px 16px;
-      background: rgb(74, 97, 28);
-      color: #e8ecc8;
-    }
-
-    .results-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 10px;
-      flex-shrink: 0;
-    }
-
-    .results-header span {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: rgba(255, 255, 255, 0.75);
-    }
-
-    .results-header strong {
-      font-size: 0.95rem;
-    }
-
-    .results-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 6px;
-      font-size: 0.78rem;
-      overflow-y: auto;
-      min-height: 0;
-    }
-
-    .result-item {
-      padding: 6px 8px;
-      border-radius: 10px;
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .result-item span {
-      display: block;
-      font-size: 0.68rem;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 2px;
-    }
-
-    .result-item strong {
-      font-size: 0.82rem;
-    }
-
-    .footer-links {
-      margin-top: auto;
-      padding-top: 12px;
-      border-top: 1px dashed #e5e7eb;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .footer-links-title {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: #4b5563;
-    }
-
-    .pdf-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .pdf-button {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid #0ea5e9;
-      background: rgba(14, 165, 233, 0.08);
-      color: #0369a1;
-      text-decoration: none;
-      font-size: 0.78rem;
-      font-weight: 500;
-    }
-
-    .pdf-button span {
-      font-size: 0.8rem;
-    }
-
-    .pdf-button:hover {
-      background: rgba(14, 165, 233, 0.16);
-    }
-
-    .helper-text {
-      margin-top: 6px;
-      font-size: 0.7rem;
-      color: #6b7280;
-    }
-
-    .fields-row + .helper-text {
-      margin-top: -4px;
-      margin-bottom: 12px;
-    }
-
-    .note {
-      margin-top: 4px;
-      font-size: 0.68rem;
-      color: #6b7280;
-    }
-
-    .app-button {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 1000;
-      text-decoration: none;
-      color: #ffffff;
-      background: #b1b1b1;
-      padding: 10px 20px;
-      border-radius: 5px;
-      display: inline-block;
-    }
-
-    .app-button:hover {
-      background: #696767;
-    }
-
-    @media (max-width: 720px) {
-      body {
-        height: auto;
-        min-height: 100vh;
-      }
-
-      .card {
-        grid-template-columns: 1fr;
-        max-width: 400px;
-      }
-
-      .card-left {
-        padding: 16px;
-      }
-
-      .card-center {
-        padding: 16px 20px;
-      }
-
-      .fields-row {
-        grid-template-columns: 1fr;
-      }
-
-      .fields-row .field-group {
-        margin-bottom: 12px;
-      }
-
-      .fields-row .field-group:last-child {
-        margin-bottom: 0;
-      }
-
-      .card-right .results-card {
-        border-radius: 0;
-      }
-
-      .results-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link rel="stylesheet" href="home.css" />
 </head>
 <body>
-  <a href="https://app-natleaf-site.iw8fse.easypanel.host" target="_blank" rel="noopener noreferrer" class="app-button">App Natleaf</a>
+  <div class="home-container">
+    <img class="home-logo" src="assets/images/NATLEAF-LOGO.avif" alt="Natleaf" />
+    <p class="home-subtitle">Escolha uma opção abaixo</p>
 
-  <main class="card">
-    <div class="card-left">
-      <div class="product-image-wrapper">
-        <img id="productImage" src="assets/images/Natleaf-brain.png" alt="Produto Natleaf" />
-      </div>
+    <div class="home-buttons">
+      <a href="https://app-natleaf-site.iw8fse.easypanel.host" target="_blank" rel="noopener noreferrer" class="home-btn home-btn--primary">
+        <i class="ph ph-app-window"></i>
+        App Natleaf
+      </a>
+      <a href="calculadora.html" class="home-btn home-btn--secondary">
+        <i class="ph ph-calculator"></i>
+        Calculadora de Doses
+      </a>
+      <button type="button" class="home-btn home-btn--secondary" id="ebookBtn" aria-label="E-Book">
+        <i class="ph ph-book-open"></i>
+        E-Book
+      </button>
     </div>
-    <div class="card-center">
-      <div class="title-block">
-        <h1>Calculadora de Doses Natleaf</h1>
-      </div>
-      <section class="field-group">
-        <label for="productSelect">Produto</label>
-        <div class="select-wrapper">
-          <select id="productSelect">
-            <option value="natleaf_brain">Natleaf Brain</option>
-            <option value="natleaf_sleep">Natleaf Sleep</option>
-            <option value="natleaf_wellness">Natleaf Wellness</option>
-          </select>
-        </div>
-      </section>
-      <div class="fields-row">
-        <section class="field-group">
-          <label for="dropsInput">Quantidade em gotas</label>
-          <input
-            type="number"
-            id="dropsInput"
-            min="0"
-            step="1"
-            placeholder="Ex.: 20"
-          />
-        </section>
-        <section class="field-group">
-          <label for="mlInput">Quantidade em mL</label>
-          <input
-            type="number"
-            id="mlInput"
-            min="0"
-            step="0.01"
-            placeholder="Ex.: 0,5"
-          />
-        </section>
-      </div>
-      <div class="helper-text">
-        40 gotas = 1 mL
-      </div>
-      <section class="field-group">
-        <div class="chip" id="summaryChip">
-          0 gotas • 0 mL
-        </div>
-        <p class="note">
-          Valores aproximados, total por frasco de 30 mL.
-        </p>
-      </section>
-      <section class="footer-links">
-        <div class="footer-links-title">Baixar laudos (PDF)</div>
-        <div class="pdf-links">
-          <a class="pdf-button" href="assets/docs/COA Natleaf Brain (1).pdf" target="_blank" rel="noopener noreferrer" download><span>Brain</span></a>
-          <a class="pdf-button" href="assets/docs/COA Natleaf Sleep (1).pdf" target="_blank" rel="noopener noreferrer" download><span>Sleep</span></a>
-          <a class="pdf-button" href="assets/docs/COA Natleaf Wellness (1).pdf" target="_blank" rel="noopener noreferrer" download><span>Wellness</span></a>
-        </div>
-      </section>
-    </div>
+  </div>
 
-    <div class="card-right">
-      <section class="results-card" aria-live="polite">
-        <div class="results-header">
-          <span>Dose estimada</span>
-          <strong id="doseTitle">0 gotas</strong>
-        </div>
-        <div class="results-grid" id="resultsGrid">
-          <!-- Resultados preenchidos via JavaScript -->
-        </div>
-      </section>
+  <!-- Modal E-Book indisponível -->
+  <div class="ebook-overlay" id="ebookOverlay" aria-hidden="true">
+    <div class="ebook-modal">
+      <i class="ph ph-book-open"></i>
+      <h3>E-Book em breve</h3>
+      <p>O E-Book ainda não está disponível. Em breve você poderá acessá-lo aqui.</p>
+      <button type="button" class="home-btn home-btn--primary" id="ebookClose">Entendi</button>
     </div>
-  </main>
+  </div>
 
   <script>
-    // Valores por frasco de 30 mL: mg/g × 30 (batch/lote nos laudos)
-    const DATA = {
-      natleaf_brain: {
-        nome: "Natleaf Brain",
-        imagem: "assets/images/Natleaf-brain.png",
-        batch: "HB11074",
-        volume_ml: 30,
-        canabinoides_mg: {
-          CBD: 36.00 * 30,      // 1080
-          CBG: 24.16 * 30,     // 724.8
-          CBDV: 0.80 * 30,     // 24
-          CBN: 0.30 * 30,      // 9
-          "THC total": 0
-        }
-      },
-      natleaf_sleep: {
-        nome: "Natleaf Sleep",
-        imagem: "assets/images/Natleaf-sleep.png",
-        batch: "HB11113",
-        volume_ml: 30,
-        canabinoides_mg: {
-          CBD: 42.90 * 30,       // 1287
-          CBN: 21.01 * 30,       // 630.3
-          "Delta9-THC": 2.53 * 30,  // 75.9
-          CBGa: 0.45 * 30,       // 13.5
-          CBDV: 0.33 * 30,       // 9.9
-          CBG: 0.32 * 30,        // 9.6
-          "Delta8-THC": 0.30 * 30,  // 9
-          "THC total": 2.83 * 30   // 84.9
-        }
-      },
-      natleaf_wellness: {
-        nome: "Natleaf Wellness",
-        imagem: "assets/images/Natleaf-wellnes.png",
-        batch: "HB11008",
-        volume_ml: 30,
-        canabinoides_mg: {
-          CBD: 51.52 * 30,       // 1545.6
-          CBT: 0.90 * 30,        // 27
-          CBDV: 0.67 * 30,      // 20.1
-          "Delta9-THC": 0.57 * 30,  // 17.1
-          CBG: 0.49 * 30,        // 14.7
-          CBN: 0.46 * 30,        // 13.8
-          "Delta8-THC": 0.25 * 30,  // 7.5
-          CBGa: 0.19 * 30,       // <0.19 mg/g no laudo
-          "THC total": 0.82 * 30    // 24.6
-        }
-      }
-    };
+    (function () {
+      var overlay = document.getElementById('ebookOverlay');
+      var btn = document.getElementById('ebookBtn');
+      var closeBtn = document.getElementById('ebookClose');
 
-    const DROPS_PER_ML = 40;
-
-    const productSelect = document.getElementById("productSelect");
-    const productImage = document.getElementById("productImage");
-    const dropsInput = document.getElementById("dropsInput");
-    const mlInput = document.getElementById("mlInput");
-    const summaryChip = document.getElementById("summaryChip");
-    const resultsGrid = document.getElementById("resultsGrid");
-    const doseTitle = document.getElementById("doseTitle");
-
-    let isSyncing = false;
-
-    function formatNumber(value) {
-      if (isNaN(value) || !isFinite(value)) return "-";
-      if (value === 0) return "0";
-      if (value < 0.01) return value.toExponential(2).replace(".", ",");
-      if (value < 1) return value.toFixed(3).replace(".", ",");
-      if (value < 100) return value.toFixed(2).replace(".", ",");
-      return value.toFixed(1).replace(".", ",");
-    }
-
-    function getSelectedProduct() {
-      return DATA[productSelect.value];
-    }
-
-    function updateImage() {
-      const produto = getSelectedProduct();
-      productImage.src = produto.imagem;
-      productImage.alt = produto.nome;
-    }
-
-    function calculate() {
-      const produto = getSelectedProduct();
-      const volumeTotalMl = produto.volume_ml;
-      const totalGotas = volumeTotalMl * DROPS_PER_ML;
-
-      let gotas = parseFloat((dropsInput.value || "0").replace(",", "."));
-      let ml = parseFloat((mlInput.value || "0").replace(",", "."));
-
-      const gotasIsNaN = isNaN(gotas);
-      const mlIsNaN = isNaN(ml);
-
-      if (gotasIsNaN && mlIsNaN) {
-        gotas = 0;
-        ml = 0;
-      } else if (gotasIsNaN && !mlIsNaN) {
-        gotas = ml * DROPS_PER_ML;
-      } else if (!gotasIsNaN && mlIsNaN) {
-        ml = gotas / DROPS_PER_ML;
+      function openModal() {
+        overlay.classList.add('is-open');
+        overlay.setAttribute('aria-hidden', 'false');
       }
 
-      summaryChip.textContent = `${formatNumber(gotas)} gotas • ${formatNumber(
-        ml
-      )} mL`;
+      function closeModal() {
+        overlay.classList.remove('is-open');
+        overlay.setAttribute('aria-hidden', 'true');
+      }
 
-      doseTitle.textContent = `${formatNumber(gotas)} gotas (${formatNumber(
-        ml
-      )} mL)`;
-
-      const proporcao = totalGotas === 0 ? 0 : gotas / totalGotas;
-
-      resultsGrid.innerHTML = "";
-
-      Object.entries(produto.canabinoides_mg).forEach(([nome, totalMg]) => {
-        const doseMg = proporcao * totalMg;
-        const item = document.createElement("div");
-        item.className = "result-item";
-        item.innerHTML = `
-          <span>${nome}</span>
-          <strong>${formatNumber(doseMg)} mg</strong>
-        `;
-        resultsGrid.appendChild(item);
+      btn.addEventListener('click', openModal);
+      closeBtn.addEventListener('click', closeModal);
+      overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) closeModal();
       });
-    }
-
-    // Eventos
-    productSelect.addEventListener("change", () => {
-      updateImage();
-      calculate();
-    });
-
-    dropsInput.addEventListener("input", () => {
-      if (isSyncing) return;
-      const raw = (dropsInput.value || "").trim();
-      const parsed = parseFloat(raw.replace(",", "."));
-      if (raw !== "" && !isNaN(parsed)) {
-        const inteiro = Math.max(0, Math.floor(parsed));
-        if (String(inteiro) !== dropsInput.value) {
-          dropsInput.value = inteiro;
-        }
-      }
-      isSyncing = true;
-      const gotas = parseFloat((dropsInput.value || "0").replace(",", "."));
-      if (!isNaN(gotas)) {
-        mlInput.value = gotas / DROPS_PER_ML || "";
-      } else {
-        mlInput.value = "";
-      }
-      calculate();
-      isSyncing = false;
-    });
-
-    mlInput.addEventListener("input", () => {
-      if (isSyncing) return;
-      isSyncing = true;
-      const ml = parseFloat((mlInput.value || "0").replace(",", "."));
-      if (!isNaN(ml)) {
-        dropsInput.value = Math.round(ml * DROPS_PER_ML) || "";
-      } else {
-        dropsInput.value = "";
-      }
-      calculate();
-      isSyncing = false;
-    });
-
-    // Inicialização
-    updateImage();
-    calculate();
+    })();
   </script>
 </body>
 </html>
-
