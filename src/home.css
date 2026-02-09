@@ -1,14 +1,23 @@
 :root {
-  --primary: #059669;
-  --primary-hover: #047857;
-  --primary-light: #d1fae5;
+  --primary: #7dba00;
+  --primary-hover: #6aa300;
+  --primary-light: #e8f5d8;
+  --error: #c53030;
   --bg: #f3f4f6;
-  --card-bg: #ffffff;
+  --surface: #ffffff;
   --text: #1f2937;
+  --text-secondary: #4b5563;
   --text-muted: #6b7280;
   --border: #e5e7eb;
-  --radius: 12px;
+  --radius: 14px;
+  --radius-sm: 8px;
   --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 12px 28px -8px rgba(125, 186, 0, 0.35);
+  --shadow-back: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-back-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --focus-ring: 0 0 0 3px var(--primary-light);
+  --overlay: rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -18,7 +27,7 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font);
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
@@ -86,11 +95,11 @@ body {
 .home-btn--primary:hover {
   background: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 12px 28px -8px rgba(5, 150, 105, 0.4);
+  box-shadow: var(--shadow-hover);
 }
 
 .home-btn--secondary {
-  background: var(--card-bg);
+  background: var(--surface);
   color: var(--text);
   border: 2px solid var(--border);
 }
@@ -109,7 +118,7 @@ body {
 .ebook-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--overlay);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +135,7 @@ body {
 }
 
 .ebook-modal {
-  background: var(--card-bg);
+  background: var(--surface);
   border-radius: var(--radius);
   padding: 32px;
   max-width: 360px;

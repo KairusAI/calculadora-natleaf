@@ -1,28 +1,27 @@
 :root {
-  /* Brand Colors */
-  --primary-color: #059669; /* Emerald 600 */
-  --primary-hover: #047857; /* Emerald 700 */
-  --primary-light: #d1fae5; /* Emerald 100 */
-  
-  /* Neutral Colors */
-  --bg-color: #f3f4f6;
-  --card-bg: #ffffff;
-  --text-main: #1f2937; /* Gray 800 */
-  --text-secondary: #4b5563; /* Gray 600 */
-  --text-muted: #9ca3af; /* Gray 400 */
-  --border-color: #e5e7eb; /* Gray 200 */
-  
-  /* Results Panel Colors */
-  --results-bg: #064e3b; /* Emerald 900 */
-  --results-text: #ecfdf5; /* Emerald 50 */
-  --results-accent: #34d399; /* Emerald 400 */
-
-  /* Spacing & Radius */
-  --radius-lg: 16px;
-  --radius-md: 8px;
-  --radius-sm: 6px;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-lg: 32px 32px 32px 32px rgba(0, 0, 0, 0.1);
+  --primary: #7dba00;
+  --primary-hover: #6aa300;
+  --primary-light: #e8f5d8;
+  --error: #c53030;
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --text-secondary: #4b5563;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --radius: 14px;
+  --radius-sm: 8px;
+  --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 12px 28px -8px rgba(125, 186, 0, 0.35);
+  --shadow-back: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-back-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --focus-ring: 0 0 0 3px var(--primary-light);
+  --overlay: rgba(0, 0, 0, 0.5);
+  /* Results panel (calculadora) */
+  --results-bg: #2d4a00;
+  --results-text: #e8f5d8;
+  --results-accent: #9ccc00;
 }
 
 * {
@@ -32,9 +31,9 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-main);
+  font-family: var(--font);
+  background-color: var(--bg);
+  color: var(--text);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -53,20 +52,20 @@ body {
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background-color: white;
+  background-color: var(--surface);
   color: var(--text-secondary);
   text-decoration: none;
   font-size: 0.875rem;
   font-weight: 500;
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-back);
   transition: all 0.2s ease;
   z-index: 10;
 }
 
 .app-button:hover {
-  color: var(--primary-color);
-  box-shadow: var(--shadow-lg);
+  color: var(--primary);
+  box-shadow: var(--shadow-back-hover);
   transform: translateY(-1px);
 }
 
@@ -83,9 +82,9 @@ body {
 .card {
   display: flex;
   flex-direction: row;
-  background: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: var(--shadow-lg);
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   overflow: hidden;
   height: 600px; /* Fixed height to prevent jumping */
   width: 100%;
@@ -104,7 +103,7 @@ body {
   background-color: #f9fafb;
   align-items: center;
   justify-content: center;
-  border-right: 1px solid var(--border-color);
+  border-right: 1px solid var(--border);
   min-width: 300px;
   position: relative; /* For absolute positioning of image if needed */
   overflow: hidden; /* Prevent spillover */
@@ -140,7 +139,7 @@ body {
   flex: 0 0 380px;
   justify-content: center;
   gap: 28px;
-  background-color: white;
+  background-color: var(--surface);
   z-index: 1;
   overflow-y: auto; /* Allow scrolling if content is too tall */
 }
@@ -148,7 +147,7 @@ body {
 .header-block h1 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-main);
+  color: var(--text);
   margin-bottom: 8px;
   letter-spacing: -0.02em;
 }
@@ -157,6 +156,7 @@ body {
   font-size: 0.95rem;
   color: var(--text-secondary);
 }
+
 
 .calculator-form {
   display: flex;
@@ -168,7 +168,7 @@ body {
   display: block;
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--text-main);
+  color: var(--text);
   margin-bottom: 8px;
 }
 
@@ -176,10 +176,10 @@ body {
   width: 100%;
   padding: 12px 16px;
   font-size: 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  background-color: white;
-  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface);
+  color: var(--text);
   transition: all 0.2s;
   font-family: inherit;
   height: 48px;
@@ -187,8 +187,8 @@ body {
 
 .input-field:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px var(--primary-light);
+  border-color: var(--primary);
+  box-shadow: var(--focus-ring);
 }
 
 .select-wrapper {
@@ -240,14 +240,14 @@ body {
   gap: 10px;
   font-size: 0.85rem;
   color: var(--text-secondary);
-  background-color: #f0fdf4;
+  background-color: var(--primary-light);
   padding: 12px 14px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--primary-light);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
 }
 
 .conversion-info i {
-  color: var(--primary-color);
+  color: var(--primary);
   font-size: 1.2rem;
   flex-shrink: 0;
 }
@@ -255,7 +255,7 @@ body {
 .downloads-section {
   margin-top: auto;
   padding-top: 24px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border);
 }
 
 .section-label {
@@ -280,8 +280,8 @@ body {
   justify-content: center;
   gap: 6px;
   padding: 8px 12px;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   color: var(--text-secondary);
   text-decoration: none;
   font-size: 0.8125rem;
@@ -293,8 +293,8 @@ body {
 }
 
 .btn-outline:hover {
-  border-color: var(--primary-color);
-  color: var(--primary-color);
+  border-color: var(--primary);
+  color: var(--primary);
   background-color: var(--primary-light);
 }
 
@@ -385,7 +385,7 @@ body {
   align-items: center;
   padding: 10px 12px;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -427,7 +427,7 @@ body {
   .col-visual {
     padding: 32px;
     border-right: none;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border);
     min-height: 300px;
     height: 300px; /* Fixed height for image area on mobile */
   }
